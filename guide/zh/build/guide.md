@@ -132,6 +132,7 @@
                 headerBackground: '#eeeceb',
                 hoverHeaderBackground: '#d7d6d5',
                 activeHeaderBackground: '#d7d6d5',
+                toolsPosition: 'left'
             },
             'ht.ui.Palette.PaletteButton': {
                 align: 'left',
