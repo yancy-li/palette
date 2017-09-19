@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Palette</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../../../../lib/ht.js"></script>
+    <script src="../../../../lib/ht-ui.js"></script>
+    <script src="../../../lib/ht-ui-palette.js"></script>
+    <script>
+        function init() {
+            palette = new ht.ui.Palette();
+            palette.setItems([{
+                    title: '电力图标',
+                    children: [{
+                            icon: 'imgs/停电.json',
+                            text: '停电'
+                        },
+                        {
+                            icon: 'imgs/在此工作.json',
+                            text: '在此工作'
+                        },
+                        {
+                            icon: 'imgs/已接地.json',
+                            text: '已接地'
+                        },
+                        {
+                            icon: 'imgs/禁止分闸.json',
+                            text: '禁止分闸'
+                        },
+                        {
+                            icon: 'imgs/禁止合闸.json',
+                            text: '禁止合闸'
+                        },
+                        {
+                            icon: 'imgs/禁止操作.json',
+                            text: '禁止操作'
+                        },
+                        {
+                            icon: 'imgs/设备在检修.json',
+                            text: '设备在检修'
+                        }
+                    ]
+                },
+                {
+                    title: '其它',
+                    children: [{
+                            iconDrawable: new ht.ui.drawable.ImageDrawable('imgs/插座.json', 'uniform'),
+                            text: '插座'
+                        },
+                        {
+                            iconDrawable: new ht.ui.drawable.ImageDrawable('imgs/灯.json', 'uniform'),
+                            text: '灯'
+                        },
+                        {
+                            iconDrawable: new ht.ui.drawable.ImageDrawable('imgs/风机.json', 'uniform'),
+                            text: '风机'
+                        },
+                        {
+                            iconDrawable: new ht.ui.drawable.ImageDrawable('imgs/维修.json', 'uniform'),
+                            text: '维修'
+                        },
+                        {
+                            iconDrawable: new ht.ui.drawable.ImageDrawable('imgs/箭头.json', 'uniform'),
+                            text: '箭头'
+                        }
+                    ]
+                }
+            ]);
+
+            palette.getRadios().addPropertyChangeListener(function (e) {
+                if (e.property === 'selectedButton') {
+                    var newSelectedButton = e.newValue,
+                        itemConfig = newSelectedButton.itemConfig;
+                    
+                    console.log(newSelectedButton, itemConfig);
+                }
+            });
+
+            palette.addToDOM();
+        }
+    </script>
+</head>
+
+<body onload="init();">
+
+</body>
+
+</html>
