@@ -31,26 +31,35 @@ def('ht.ui.Palette.PaletteContent', ui.ViewGroup, {
             for (var i = 0; i < length; i++) {
                 var child = children.get(i),
                     preferredSize = child.getPreferredSize(),
-                    layoutParams = self.getChildLayoutParams(child) || {},
+                    layoutParams = self.getChildLayoutParams(child),
                     marginLeft = layoutParams.marginLeft || 0,
                     marginRight = layoutParams.marginRight || 0,
                     marginTop = layoutParams.marginTop || 0,
                     marginBottom = layoutParams.marginBottom || 0;
 
                 rowHeight = Math.max(rowHeight, preferredSize.height + marginTop + marginBottom);
-
-                // 右侧没有足够的空间，换到下一行
-                if (layoutX + preferredSize.width + marginLeft + marginRight >= width) {
-                    scrollHeight += rowHeight;
-
-                    layoutX = 0;
-                    rowHeight = 0;
-                }
-
                 layoutX += marginLeft + preferredSize.width + marginRight;
-            }
 
-            scrollHeight += rowHeight;
+                if (i < length - 1) {
+                    var nextChild = children.get(i+1),
+                        nextPreferredSize = nextChild.getPreferredSize(),
+                        nextLayoutParams = self.getChildLayoutParams(nextChild),
+                        nextMarginLeft = nextLayoutParams.marginLeft || 0,
+                        nextMarginRight = nextLayoutParams.marginRight || 0;
+
+                    // 右侧没有足够的空间，换到下一行
+                    if (layoutX + nextPreferredSize.width + nextMarginLeft + nextMarginRight >= width) {
+                        scrollHeight += rowHeight;
+
+                        layoutX = 0;
+                        rowHeight = 0;
+                    }
+                }
+                else {
+                    // 最后一个元素的 rowHeight 就是最后一行的高度
+                    scrollHeight += rowHeight;
+                }
+            }
             return {
                 width: width,
                 height: scrollHeight
@@ -99,16 +108,23 @@ def('ht.ui.Palette.PaletteContent', ui.ViewGroup, {
                 marginBottom = layoutParams.marginBottom || 0;
 
             rowHeight = Math.max(rowHeight, preferredSize.height + marginTop + marginBottom);
-
-            // 右侧没有足够的空间，换到下一行
-            if (layoutX + preferredSize.width + marginLeft + marginRight >= width) {
-                layoutX = 0;
-                layoutY += rowHeight;
-                rowHeight = 0;
-            }
-
             self.layoutChild(child, layoutX + marginLeft, layoutY + marginTop, preferredSize.width, preferredSize.height);
             layoutX += marginLeft + preferredSize.width + marginRight;
+
+            if (i < size - 1) {
+                var nextChild = children.get(i+1),
+                    nextPreferredSize = nextChild.getPreferredSize(),
+                    nextLayoutParams = self.getChildLayoutParams(nextChild),
+                    nextMarginLeft = nextLayoutParams.marginLeft || 0,
+                    nextMarginRight = nextLayoutParams.marginRight || 0;
+
+                // 右侧没有足够的空间，换到下一行
+                if (layoutX + nextPreferredSize.width + nextMarginLeft + nextMarginRight >= width) {
+                    layoutX = 0;
+                    layoutY += rowHeight;
+                    rowHeight = 0;
+                }
+            }
         }
     }
 });
