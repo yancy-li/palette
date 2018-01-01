@@ -7,7 +7,6 @@ module.exports = function (grunt) {
             '<%= srcDir %>/Palette.js',
             '<%= srcDir %>/PalettePanel.js',
             '<%= srcDir %>/PaletteContent.js',
-            '<%= srcDir %>/PaletteButtonBorder.js',
             '<%= srcDir %>/PaletteButton.js',
             '<%= srcDir %>/end.js'
         ],

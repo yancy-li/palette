@@ -141,13 +141,7 @@
                 vTextPosition: 'middle',
                 iconWidth: 20,
                 iconHeight: 20,
-                hoverBorderColor: '#c7c7c7',
-                activeBorderColor: '#c7c7c7',
-                borderRadius: 6,
-                activeBackground: '#ddd',
-                selectBackground: '#ddd',
-                activeTextColor: '#000',
-                selectTextColor: '#000'
+                borderRadius: 6
             }
         })
     </script>

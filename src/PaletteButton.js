@@ -6,32 +6,25 @@ Palette.PaletteButton = function () {
     Palette.PaletteButton.superClass.constructor.call(self);
 
     // selected 状态变化时同步到 JSON 中
-    self.addPropertyChangeListener(function (e) {
-        if (e.property === 'selected') {
-            if (self.itemConfig) {
-                if (e.newValue) {
-                    self.itemConfig.selected = true;
-                } else {
-                    delete self.itemConfig.selected;
-                }
+    self.on('p:selected', function (e) {
+        if (self.itemConfig) {
+            if (e.newValue) {
+                self.itemConfig.selected = true;
+            } else {
+                delete self.itemConfig.selected;
             }
         }
     });
 };
 
 def('ht.ui.Palette.PaletteButton', ui.ToggleButton, {
-
-    ui_ac: ['borderColor', 'hoverBorderColor', 'activeBorderColor'],
-
-    __border: new ht.ui.Palette.PaletteButtonBorder(1),
-    __borderColor: '#fff',
-    __hoverBorderColor: '#0086d1',
-    __activeBorderColor: '#0086d1',
-    __textColor: '#000',
+    __textColor: ht.ui.uiTheme.textColor,
     __background: '#fff',
-    __activeTextColor: '#fff',
-    __activeBackground: '#0094d8',
-    __selectBackground: '#0094d8',
+    __hoverBackground: ht.ui.uiTheme.hoverBackground,
+    __activeBackground: ht.ui.uiTheme.activeBackground,
+    __selectBackground: ht.ui.uiTheme.baseColor,
+    __selectHoverBackground: ht.ui.uiTheme.hoverColor,
+    __selectActiveBackground: ht.ui.uiTheme.activeColor,
     __selectTextColor: '#fff',
     __iconWidth: 50,
     __iconHeight: 50,
@@ -70,12 +63,5 @@ def('ht.ui.Palette.PaletteButton', ui.ToggleButton, {
         } else {
             return Palette.PaletteButton.superClass.getCurrentIconDrawable.call(self, state);
         }
-    },
-
-    getSerializableProperties: function() {
-        var parentProperties = Palette.PaletteButton.superClass.getSerializableProperties.call(this);
-        return addMethod(parentProperties, {
-            borderColor: true, hoverBorderColor: true, activeBorderColor: true
-        });
     }
 });

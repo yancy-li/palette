@@ -77,13 +77,11 @@
                 }
             ]);
 
-            palette.getRadios().addPropertyChangeListener(function (e) {
-                if (e.property === 'selectedButton') {
-                    var newSelectedButton = e.newValue,
-                        itemConfig = newSelectedButton.itemConfig;
-                    
-                    console.log(newSelectedButton, itemConfig);
-                }
+            palette.getRadios().on('p:selectedButton', function (e) {
+                var newSelectedButton = e.newValue,
+                    itemConfig = newSelectedButton.itemConfig;
+                
+                console.log(newSelectedButton, itemConfig);
             });
 
             palette.addToDOM();

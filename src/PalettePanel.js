@@ -11,15 +11,13 @@ Palette.PalettePanel = function () {
     });
 
     // 展开合并状态变化时同步到 JSON
-    self.addPropertyChangeListener(function(e) {
-        if (e.property === 'expanded') {
-            if (self.itemConfig) {
-                if (e.newValue) {
-                    delete self.itemConfig.expanded;
-                }
-                else {
-                    self.itemConfig.expanded = false;
-                }
+    self.on('p:expanded', function(e) {
+        if (self.itemConfig) {
+            if (e.newValue) {
+                delete self.itemConfig.expanded;
+            }
+            else {
+                self.itemConfig.expanded = false;
             }
         }
     });
