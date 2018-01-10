@@ -61,8 +61,8 @@ def('ht.ui.Palette.PaletteContent', ui.ViewGroup, {
                 }
             }
             return {
-                width: width,
-                height: scrollHeight
+                width: Math.ceil(width),
+                height: Math.ceil(scrollHeight)
             };
         }
     },
