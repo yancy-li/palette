@@ -30,31 +30,8 @@ def('ht.ui.Palette', ui.VBoxLayout, {
 
     __dragEnabled: true,
 
-    /**
-     * 设置监听器
-     * @override
-     */
-    setUpInteractors: function () {
-        var self = this,
-            interactor = self._paletteInteractor;
-        if (!interactor) {
-            interactor = self._paletteInteractor = new PaletteInteractor(self);
-            interactor.addListeners();
-        }
-        Palette.superClass.setUpInteractors.call(self);
-    },
-    /**
-     * 卸载监听器
-     * @override
-     */
-    tearDownInteractors: function () {
-        var self = this,
-            interactor = self._paletteInteractor;
-        if (interactor) {
-            interactor.removeListeners();
-            self._paletteInteractor = NULL;
-        }
-        Palette.superClass.tearDownInteractors.call(self);
+    getInteractorClasses: function() {
+        return [PaletteInteractor].concat(Palette.superClass.getInteractorClasses.call(self));
     },
 
     /**
