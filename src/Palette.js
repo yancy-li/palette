@@ -31,7 +31,7 @@ def('ht.ui.Palette', ui.VBoxLayout, {
     __dragEnabled: true,
 
     getInteractorClasses: function() {
-        return [PaletteInteractor].concat(Palette.superClass.getInteractorClasses.call(self));
+        return [PaletteInteractor].concat(Palette.superClass.getInteractorClasses.call(this));
     },
 
     /**
