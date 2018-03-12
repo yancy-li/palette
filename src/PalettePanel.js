@@ -4,9 +4,11 @@ Palette.PalettePanel = function () {
 
     // 点击 header 时即切换展开合并状态
     self.getView().addEventListener(Default.isTouchable ? 'touchstart': 'mousedown', function (e) {
-        var lp = self.lp(e);
-        if (lp.y < self.getHeaderHeight()) {
-            self.setExpanded(!self.isExpanded());
+        if (self.isHeaderVisible()) {
+            var lp = self.lp(e);
+            if (lp.y < self.getHeaderHeight()) {
+                self.setExpanded(!self.isExpanded());
+            }
         }
     });
 
