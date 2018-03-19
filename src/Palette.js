@@ -91,7 +91,8 @@ def('ht.ui.Palette', ui.VBoxLayout, {
                 }
             }
 
-            var panelContent = new ui.Palette.PaletteContent();
+            var panelContent = new ui.FlowLayout();
+            panelContent.__padding = [0, 0, 10, 0];
             for (var j = 0, childrenLength = childrenItems.length; j < childrenLength; j++) {
                 var childItem = childrenItems[j],
                     button = new ui.Palette.PaletteButton();
