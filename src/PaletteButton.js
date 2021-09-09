@@ -14,7 +14,7 @@ Palette.PaletteButton = function () {
                 delete self.itemConfig.selected;
             }
         }
-    });
+    }, undefined, undefined, undefined, true);
 };
 
 def('ht.ui.Palette.PaletteButton', ui.ToggleButton, {

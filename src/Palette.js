@@ -7,6 +7,11 @@ var Palette = ui.Palette = function () {
     Palette.superClass.constructor.call(self);
 
     self._radios = new ui.Radios();
+    var templatePanel = new Palette.PalettePanel();
+    self.setTemplatePanel(templatePanel);
+
+    var templateButton = new Palette.PaletteButton();
+    self.setTemplateButton(templateButton);
 }
 
 def('ht.ui.Palette', ui.VBoxLayout, {
@@ -26,8 +31,8 @@ def('ht.ui.Palette', ui.VBoxLayout, {
      *       ]
      *   }
      */
-    ms_ac: ['items'],
-
+    ms_ac: ['items', 'templatePanel', 'templateButton'],
+    _items: [],
     __dragEnabled: true,
 
     getInteractorClasses: function() {
@@ -40,6 +45,12 @@ def('ht.ui.Palette', ui.VBoxLayout, {
      */
     getRadios: function() {
         return this._radios;
+    },
+    setItems: function(items) {
+        if (typeof items === 'string') {
+            items = ht.Default.parse(items);
+        }
+        this.setPropertyValue('items', items);
     },
 
     /**
@@ -54,6 +65,28 @@ def('ht.ui.Palette', ui.VBoxLayout, {
         if (property === 'items') {
             self.invalidateComps();
         }
+        else if (property === 'templatePanel') {
+            self.invalidateComps();
+            var templatePanel = e.newValue;
+
+            if (templatePanel && !templatePanel._propertyChangeHandler) {
+                templatePanel._propertyChangeHandler = function(e) {
+                    self.invalidateComps();
+                }
+                templatePanel.addPropertyChangeListener(templatePanel._propertyChangeHandler);
+            }
+        }
+        else if (property === 'templateButton') {
+            self.invalidateComps();
+            var templateButton = e.newValue;
+
+            if (templateButton && !templateButton._propertyChangeHandler) {
+                templateButton._propertyChangeHandler = function(e) {
+                    self.invalidateComps();
+                }
+                templateButton.addPropertyChangeListener(templateButton._propertyChangeHandler);
+            }
+        }
         Palette.superClass.onPropertyChanged.call(self, e);
     },
 
@@ -67,7 +100,6 @@ def('ht.ui.Palette', ui.VBoxLayout, {
         }
         self.iv();
     },
-
     /**
      * 重新构建子组件
      */
@@ -77,12 +109,16 @@ def('ht.ui.Palette', ui.VBoxLayout, {
 
         self._radios.clear();
         self.clear();
+        var serializer = new ht.ui.UIJSONSerializer();
+        var panelJSON = serializer.serialize(self.getTemplatePanel());
+        var buttonJSON = serializer.serialize(self.getTemplateButton());
 
         for (var i = 0, length = items.length; i < length; i++) {
             var item = items[i],
                 childrenItems = item.children || [];
 
-            var panel = new Palette.PalettePanel();
+            var panel = serializer.deserialize(panelJSON);
+            self.onCreatingPanel && self.onCreatingPanel(panel);
             panel.itemConfig = item;
             for (var key in item) {
                 if (key !== 'children') {
@@ -95,13 +131,18 @@ def('ht.ui.Palette', ui.VBoxLayout, {
             panelContent.__padding = [0, 0, 10, 0];
             for (var j = 0, childrenLength = childrenItems.length; j < childrenLength; j++) {
                 var childItem = childrenItems[j],
-                    button = new ui.Palette.PaletteButton();
-
+                    button = serializer.deserialize(buttonJSON);
+                self.onCreatingButton && self.onCreatingButton(button);
                 button.itemConfig = childItem;
                 self._radios.add(button);
                 for (var key in childItem) {
-                    if (button[Default.setter(key)])
-                        button[Default.setter(key)](childItem[key]);
+                    if (key.indexOf('a:') === 0) {
+                        button.a(key.substr(key.indexOf(':') + 1), childItem[key])
+                    }
+                    else {
+                        if (button[Default.setter(key)])
+                            button[Default.setter(key)](childItem[key]);
+                    }
                 }
                 panelContent.addView(button);
             }
@@ -280,5 +321,15 @@ def('ht.ui.Palette', ui.VBoxLayout, {
                 return item;
             }
         }
+    },
+    getSerializableProperties: function () {
+        var parentProperties = Palette.superClass.getSerializableProperties.call(this);
+        delete parentProperties.children;
+        return Default.addMethod(parentProperties,{
+            templatePanel: true,
+            templateButton: true,
+            items: true,
+            dragEnabled: true
+        });
     }
 });

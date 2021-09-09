@@ -22,7 +22,7 @@ Palette.PalettePanel = function () {
                 self.itemConfig.expanded = false;
             }
         }
-    });
+    }, undefined, undefined, undefined, true);
 };
 
 def('ht.ui.Palette.PalettePanel', ui.Panel, {
@@ -34,5 +34,10 @@ def('ht.ui.Palette.PalettePanel', ui.Panel, {
      * 忽略展开合并工具按钮的点击事件
      * @override
      */
-    getToolIndex: function() { }
+    getToolIndex: function() { },
+    getSerializableProperties: function () {
+        var parentProperties = Palette.PalettePanel.superClass.getSerializableProperties.call(this);
+        delete parentProperties.children;
+        return parentProperties;
+    }
 });
