@@ -21,11 +21,6 @@ def('ht.ui.Palette.PalettePanel', ui.Panel, {
     __border: null,
     __borderRadius: 0,
 
-    /**
-     * 忽略展开合并工具按钮的点击事件
-     * @override
-     */
-    getToolIndex: function() { },
     getSerializableProperties: function () {
         var parentProperties = Palette.PalettePanel.superClass.getSerializableProperties.call(this);
         delete parentProperties.children;
