@@ -246,6 +246,40 @@ def('ht.ui.Palette', ui.VBoxLayout, {
 
         self.fp('items', NULL, self.getItems());
     },
+    removeItemById: function(id) {
+        var self = this,
+            items = self.getItems(),
+            relatedItem;
+
+        var each = function (items) {
+            if (items) {
+                var length = items.length;
+                for (var i = 0; i < length; i++) {
+                    var item = items[i];
+                    if (item.id === id) {
+                        return [items, item];
+                    }
+                    else if (item.children) {
+                        var v = each(item.children)
+                        if (v) return v;
+                    }
+                }
+            }
+        }
+
+        if (!items) items = self._items = [];
+
+
+        var value = each(items);
+        if (value) {
+            items = value[0];
+            relatedItem = value[1];
+
+            items.splice(items.indexOf(relatedItem), 1);
+    
+            self.fp('items', NULL, self.getItems());
+        }
+    },
 
     /**
      * 根据 title 或 text 查找 item
