@@ -30,8 +30,8 @@ def('ht.ui.Palette.PalettePanel', ui.Panel, {
     __border: null,
     __borderRadius: 0,
 
-    getInteractorClasses: function() {
-        return [];
+    handleHeaderClick: function() {
+
     },
     getSerializableProperties: function () {
         var parentProperties = Palette.PalettePanel.superClass.getSerializableProperties.call(this);
