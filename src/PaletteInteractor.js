@@ -7,8 +7,8 @@ var PaletteInteractor = function (view) {
         isTouchable = Default.isTouchable;
     PaletteInteractor.superClass.constructor.call(self, view);
     view.getView().addEventListener(isTouchable ? 'touchstart' : 'mousedown', function (e) {
-        if (view.isDragEnabled()) {
-            var button = Default.getViewAt(e);
+        var button = Default.getViewAt(e);
+        if (view.isDragEnabled(button)) {
             if (button instanceof ui.Button) {
                 ui.DragHelper.doDrag(button, button.itemConfig, button.getRootCanvas(), 10, 10);
             }
