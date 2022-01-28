@@ -4,7 +4,8 @@ Palette.PalettePanel = function () {
 
     // 点击 header 时即切换展开合并状态
     self.getView().addEventListener(Default.isTouchable ? 'touchstart': 'mousedown', function (e) {
-        if (self.isHeaderVisible()) {
+        if (self.isHeaderVisible() && self.getToolAt(e) == null) {
+
             var lp = self.lp(e);
             if (lp.y < self.getHeaderHeight()) {
                 self.setExpanded(!self.isExpanded());
