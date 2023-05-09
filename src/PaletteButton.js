@@ -18,27 +18,7 @@ Palette.PaletteButton = function () {
 };
 
 def('ht.ui.Palette.PaletteButton', ui.ToggleButton, {
-    __textColor: ht.ui.uiTheme.textColor,
-    __background: '#fff',
-    __hoverBackground: ht.ui.uiTheme.hoverBackground,
-    __activeBackground: ht.ui.uiTheme.activeBackground,
-    __selectBackground: ht.ui.uiTheme.baseColor,
-    __selectHoverBackground: ht.ui.uiTheme.hoverColor,
-    __selectActiveBackground: ht.ui.uiTheme.activeColor,
-    __selectTextColor: '#fff',
-    __iconWidth: 50,
-    __iconHeight: 50,
-    __hTextPosition: 'center',
-    __vTextPosition: 'bottom',
-    __preferredSize: {
-        width: 80,
-        height: 80
-    },
-    __layoutParams: {
-        marginLeft: 10,
-        marginTop: 10
-    },
-
+    
     /**
      * 获取要绘制的按钮图标
      * @override

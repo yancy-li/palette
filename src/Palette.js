@@ -14,8 +14,8 @@ var Palette = ui.Palette = function () {
     self.setTemplateButton(templateButton);
 }
 
-def('ht.ui.Palette', ui.VBoxLayout, {
-    
+def('ht.ui.Palette', ui.AccordionLayout, {
+    __autoExclusive: false,
     // 样式属性
     ui_ac: ['dragEnabled'],
 

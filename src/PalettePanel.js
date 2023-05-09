@@ -28,8 +28,8 @@ Palette.PalettePanel = function () {
 
 def('ht.ui.Palette.PalettePanel', ui.Panel, {
     
-    __border: null,
-    __borderRadius: 0,
+    // __border: null,
+    // __borderRadius: 0,
 
     handleHeaderClick: function() {
 
